@@ -243,3 +243,5 @@ OWASP Juice Shop and any contributions are Copyright © by Bjoern Kimminich & th
 # Demo CI run on master
 
 (probe anti-commit master)
+
+Test anti-commit (v2)
