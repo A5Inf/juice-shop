@@ -242,3 +242,5 @@ OWASP Juice Shop and any contributions are Copyright © by Bjoern Kimminich & th
 
 # Test GitHub Actions
 # Demo CI run on master
+
+Test sans protections (v2)
