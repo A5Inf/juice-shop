@@ -4,17 +4,17 @@ on: [push, pull_request]
 jobs:
   build_test:
     runs-on: ubuntu-latest
+    # On exécute toutes les commandes dans le dossier frontend
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: |
-            package-lock.json
-            frontend/package-lock.json
-      # Install à la racine (tolérant à l'absence de lockfile)
-      - run: npm install --no-audit --no-fund
-      # Install & build du frontend (où est le lockfile)
-      - run: cd frontend && npm ci --legacy-peer-deps || npm install --legacy-peer-deps
-      - run: cd frontend && npm run build
+          cache-dependency-path: frontend/package-lock.json
+      # installe proprement (si npm ci échoue, on retombe sur npm install)
+      - run: npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+      - run: npm run build
