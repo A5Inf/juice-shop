@@ -10,5 +10,11 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-      - run: npm install
-      - run: cd frontend && npm install --legacy-peer-deps && npm run build
+          cache-dependency-path: |
+            package-lock.json
+            frontend/package-lock.json
+      # Install à la racine (tolérant à l'absence de lockfile)
+      - run: npm install --no-audit --no-fund
+      # Install & build du frontend (où est le lockfile)
+      - run: cd frontend && npm ci --legacy-peer-deps || npm install --legacy-peer-deps
+      - run: cd frontend && npm run build
